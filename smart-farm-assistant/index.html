@@ -132,6 +132,10 @@
           <span class="icon">🎮</span>
           <span>Growing Tips Game</span>
         </button>
+        <button id="journal-btn" class="tool-btn">
+          <span class="icon">📓</span>
+          <span>Garden Journal</span>
+        </button>
       </div>
       <div class="sidebar-actions">
         <button id="clear-chat" class="clear-chat">Clear Conversation</button>
@@ -188,6 +192,18 @@
             <button id="restart-quiz-btn" class="primary-btn">Play Again</button>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Garden Journal Modal -->
+    <div id="journal-modal" class="modal">
+      <div class="modal-header">
+        <h2>Garden Journal</h2>
+        <button class="close-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <textarea id="journal-text" placeholder="Write your garden notes here..." spellcheck="false"></textarea>
+        <p class="hint">Notes are saved automatically.</p>
       </div>
     </div>
 

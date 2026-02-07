@@ -820,6 +820,25 @@ body {
   line-height: 1.6;
 }
 
+#journal-text {
+  width: 100%;
+  height: 300px;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 1rem;
+  background-color: var(--surface-secondary);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+#journal-text:focus {
+  outline: 2px solid var(--green-300);
+  background-color: var(--surface);
+}
+
 .hidden {
   display: none !important;
 }

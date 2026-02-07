@@ -185,11 +185,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const urbanBtn = document.getElementById('urban-btn');
   const problemSolverBtn = document.getElementById('problem-solver-btn');
   const gameBtn = document.getElementById('game-btn');
+  const journalBtn = document.getElementById('journal-btn');
   const estimatorModal = document.getElementById('estimator-modal');
   const checklistModal = document.getElementById('checklist-modal');
   const urbanModal = document.getElementById('urban-modal');
   const problemSolverModal = document.getElementById('problem-solver-modal');
   const gameModal = document.getElementById('game-modal');
+  const journalModal = document.getElementById('journal-modal');
   const closeBtns = document.querySelectorAll('.close-modal');
   const cropInput = document.getElementById('crop-input');
   const cropList = document.getElementById('crop-list');
@@ -197,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const estimatorResult = document.getElementById('estimator-result');
   const plantDateInput = document.getElementById('plant-date');
   const taskCheckboxes = document.querySelectorAll('#task-list input[type="checkbox"]');
+  const journalText = document.getElementById('journal-text');
 
   // Urban Mini-Chatbot Elements
   const urbanMessagesEl = document.getElementById('urban-messages');
@@ -253,6 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
     urbanModal.classList.remove('active');
     problemSolverModal.classList.remove('active');
     gameModal.classList.remove('active');
+    journalModal.classList.remove('active');
     estimatorResult.classList.add('hidden');
   }
 
@@ -264,6 +268,17 @@ document.addEventListener('DOMContentLoaded', () => {
     resetQuiz();
     openModal(gameModal);
   });
+  journalBtn.addEventListener('click', () => {
+    // Load journal content
+    journalText.value = localStorage.getItem('sfa_journal') || '';
+    openModal(journalModal);
+  });
+  
+  // Journal Auto-Save
+  journalText.addEventListener('input', () => {
+    localStorage.setItem('sfa_journal', journalText.value);
+  });
+
   modalOverlay.addEventListener('click', (e) => {
     if (e.target === modalOverlay) closeModal();
   });
