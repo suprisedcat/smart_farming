@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Farm Assistant</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Welcome / Onboarding Screen -->
+  <div id="welcome-screen" class="welcome-screen">
+    <div class="welcome-card">
+      <div class="welcome-header">
+        <div class="welcome-logo">🌱</div>
+        <h1>Welcome to Smart Farm Assistant</h1>
+        <p>Let's personalize your gardening experience</p>
+      </div>
+      
+      <form id="onboarding-form">
+        <div class="onboarding-step">
+          <h3>Tell us about yourself</h3>
+          <div class="form-group">
+            <label for="user-name">Your Name</label>
+            <input type="text" id="user-name" placeholder="Enter your name" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Experience Level</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="experience" value="beginner" checked>
+                <span>Beginner</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="experience" value="experienced">
+                <span>Experienced</span>
+              </label>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Garden Type</label>
+            <div class="garden-type-grid">
+              <label class="garden-option">
+                <input type="radio" name="garden-type" value="backyard" checked>
+                <div class="option-content">
+                  <span class="option-icon">🏡</span>
+                  <span class="option-label">Backyard</span>
+                </div>
+              </label>
+              <label class="garden-option">
+                <input type="radio" name="garden-type" value="balcony">
+                <div class="option-content">
+                  <span class="option-icon">🏙️</span>
+                  <span class="option-label">Balcony</span>
+                </div>
+              </label>
+              <label class="garden-option">
+                <input type="radio" name="garden-type" value="indoor">
+                <div class="option-content">
+                  <span class="option-icon">🪴</span>
+                  <span class="option-label">Indoor</span>
+                </div>
+              </label>
+              <label class="garden-option">
+                <input type="radio" name="garden-type" value="community">
+                <div class="option-content">
+                  <span class="option-icon">🌻</span>
+                  <span class="option-label">Community</span>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        <button type="submit" class="welcome-done-btn">Get Started</button>
+      </form>
+    </div>
+  </div>
+
+  <header class="site-header hidden-at-start">
+    <div id="brand-link" class="brand" style="cursor: pointer;">
+      <svg class="brand-icon" width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="currentColor" d="M12 3c4 0 9 3 9 9 0 5-5 9-9 9S3 17 3 12C3 6 8 3 12 3zm0 2c-2.8 0-6 2.3-6 7 0 3.9 3.1 7 6 7s6-3.1 6-7c0-4.7-3.2-7-6-7z"/>
+        <path fill="currentColor" d="M7 13c3-1 5-3 6-6 2 3 1 7-2 9-2 2-5 2-7 1 2-1 3-2 3-4z"/>
+      </svg>
+      <span>Smart Farm Assistant</span>
+    </div>
+    <div class="header-widgets">
+      <button id="theme-toggle" class="header-widget" title="Toggle Dark/Light Mode">
+        <span class="theme-icon">🌓</span>
+        <span class="theme-text">Mode</span>
+      </button>
+      <button id="geo-btn" class="header-widget">
+        <span class="icon">📍</span>
+        <span id="geo-text">Detect Location</span>
+      </button>
+      <button id="date-btn" class="header-widget">
+        <span class="icon">📅</span>
+        <span id="date-text">Detect Season</span>
+      </button>
+    </div>
+  </header>
+  <main class="app-layout hidden-at-start">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <button id="new-chat" class="new-chat">
+          <span class="icon">＋</span>
+          <span>New Conversation</span>
+        </button>
+      </div>
+      <nav class="chat-list" id="chat-list" aria-label="Chats"></nav>
+      <div class="sidebar-section">
+        <h3>Garden Tools</h3>
+        <button id="estimator-btn" class="tool-btn">
+          <span class="icon">📊</span>
+          <span>Harvest Estimator</span>
+        </button>
+        <button id="checklist-btn" class="tool-btn">
+          <span class="icon">✅</span>
+          <span>Task Checklist</span>
+        </button>
+        <button id="urban-btn" class="tool-btn">
+          <span class="icon">🏙️</span>
+          <span>Urban & Indoor Gardening</span>
+        </button>
+        <button id="problem-solver-btn" class="tool-btn">
+          <span class="icon">🛠️</span>
+          <span>Problem Solver</span>
+        </button>
+        <button id="game-btn" class="tool-btn">
+          <span class="icon">🎮</span>
+          <span>Growing Tips Game</span>
+        </button>
+      </div>
+      <div class="sidebar-actions">
+        <button id="clear-chat" class="clear-chat">Clear Conversation</button>
+      </div>
+    </aside>
+    <section class="chat-layout">
+      <div class="chat-card">
+        <section class="messages" id="messages" role="log" aria-live="polite" aria-relevant="additions">
+          <div class="message assistant">
+            <div class="avatar">🤖</div>
+            <div class="bubble">Welcome. Ask about crops, soil, irrigation, or pests.</div>
+          </div>
+        </section>
+        <form class="input-row" id="chat-form">
+          <label for="user-input" class="visually-hidden">Your question</label>
+          <input id="user-input" type="text" name="query" placeholder="Type your farming question..." autocomplete="off">
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modals -->
+  <div id="modal-overlay" class="modal-overlay">
+    <!-- Growing Tips Game Modal -->
+    <div id="game-modal" class="modal">
+      <div class="modal-header">
+        <h2>Growing Tips Game</h2>
+        <button class="close-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="quiz-start-view">
+          <p>Test your gardening knowledge and learn new tips!</p>
+          <button id="start-quiz-btn" class="primary-btn">Start Game</button>
+        </div>
+        
+        <div id="quiz-game-view" class="hidden">
+          <div class="quiz-progress">Question <span id="current-q">1</span> of <span id="total-q">5</span></div>
+          <h3 id="quiz-question" class="quiz-question"></h3>
+          <div id="quiz-options" class="quiz-options">
+            <!-- Options will be injected here -->
+          </div>
+          <div id="quiz-feedback" class="quiz-feedback hidden">
+            <p id="feedback-text"></p>
+            <button id="next-q-btn" class="primary-btn">Next Question</button>
+          </div>
+        </div>
+
+        <div id="quiz-result-view" class="hidden">
+          <div class="result-box">
+            <h3>Game Over!</h3>
+            <p class="final-score">Your Score: <span id="quiz-score">0</span> / <span id="quiz-max-score">5</span></p>
+            <p id="quiz-commentary" class="quiz-commentary"></p>
+            <button id="restart-quiz-btn" class="primary-btn">Play Again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="estimator-modal" class="modal">
+      <div class="modal-header">
+        <h2>Harvest Estimator</h2>
+        <button class="close-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Select your crop and planting date to estimate your harvest time.</p>
+        <div class="form-group">
+          <label for="crop-select">Crop Name:</label>
+          <input type="text" id="crop-input" list="crop-list" placeholder="e.g., Tomato">
+          <datalist id="crop-list"></datalist>
+        </div>
+        <div class="form-group">
+          <label for="plant-date">Planting Date:</label>
+          <input type="date" id="plant-date">
+        </div>
+        <button id="calculate-btn" class="primary-btn">Estimate Harvest Date</button>
+        <div id="estimator-result" class="result-box hidden"></div>
+      </div>
+    </div>
+
+    <div id="checklist-modal" class="modal">
+      <div class="modal-header">
+        <h2>Garden Task Checklist</h2>
+        <button class="close-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="progress-wrapper">
+          <div class="progress-info">
+            <span>Overall Progress</span>
+            <span id="progress-text">0%</span>
+          </div>
+          <div class="progress-track">
+            <div id="checklist-progress" class="progress-fill" style="width: 0%"></div>
+          </div>
+        </div>
+        <ul id="task-list" class="task-list">
+          <li>
+            <label>
+              <input type="checkbox" data-task="watering">
+              <span>Watering</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" data-task="fertilizing">
+              <span>Fertilizing</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" data-task="weeding">
+              <span>Weeding</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" data-task="harvesting">
+              <span>Harvesting</span>
+            </label>
+          </li>
+        </ul>
+        <p class="hint">Your progress is saved automatically.</p>
+      </div>
+    </div>
+
+    <!-- Urban Gardening Modal -->
+    <!-- Problem Solver Modal -->
+    <div id="problem-solver-modal" class="modal modal-lg">
+      <div class="modal-header">
+        <h2>Problem Solver: Troubleshooting</h2>
+        <button class="close-modal">&times;</button>
+      </div>
+      <div class="modal-body problem-body">
+        <div class="problem-chat-container">
+          <div id="problem-messages" class="problem-messages">
+            <div class="message assistant">
+              <div class="avatar">🛠️</div>
+              <div class="bubble">Something wrong in your garden? I'm here to help you troubleshoot. What are you seeing?</div>
+            </div>
+          </div>
+          <div class="problem-chips-wrapper">
+            <span class="problem-chips-label">Common issues:</span>
+            <div class="problem-chips">
+              <button class="problem-chip" data-query="yellow leaves">🟡 Yellow Leaves</button>
+              <button class="problem-chip" data-query="brown tips">🍂 Brown Tips</button>
+              <button class="problem-chip" data-query="pests and bugs">🐜 Pests & Bugs</button>
+              <button class="problem-chip" data-query="wilting plants">🥀 Wilting</button>
+              <button class="problem-chip" data-query="white powder mold">⚪ White Powder</button>
+              <button class="problem-chip" data-query="slow growth">🐢 Slow Growth</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="urban-modal" class="modal modal-lg">
+      <div class="modal-header">
+        <h2>Urban & Indoor Gardening</h2>
+        <button class="close-modal">&times;</button>
+      </div>
+      <div class="modal-body urban-body">
+        <div class="urban-chat-container">
+          <div id="urban-messages" class="urban-messages">
+            <div class="message assistant">
+              <div class="avatar">🏙️</div>
+              <div class="bubble">Hi! I'm your Urban Gardening specialist. Growing in an apartment or small space? I'm here to help!</div>
+            </div>
+          </div>
+          <div class="urban-chips-wrapper">
+            <span class="urban-chips-label">Ask me about:</span>
+            <div class="urban-chips">
+              <button class="urban-chip" data-query="apartment gardening">🏢 Apartment Gardening</button>
+              <button class="urban-chip" data-query="container gardening">🪴 Container Guide</button>
+              <button class="urban-chip" data-query="indoor plant care">🏠 Indoor Plant Care</button>
+              <button class="urban-chip" data-query="window garden">🪟 Window Optimization</button>
+              <button class="urban-chip" data-query="houseplant recommendations">🌿 Houseplant Picks</button>
+              <button class="urban-chip" data-query="small space solutions">📐 Small Space Tips</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="knowledge.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+
